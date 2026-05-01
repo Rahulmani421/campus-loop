@@ -6,6 +6,7 @@ import com.campusloop.model.User;
 import com.campusloop.service.MessageService;
 import com.campusloop.service.ProductService;
 import com.campusloop.service.UserService;
+import com.campusloop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +27,7 @@ public class InteractionController {
     private ProductService productService;
 
     @Autowired
-    private com.campusloop.repository.UserRepository userRepository;
+    private UserRepository userRepository;
 
     @PostMapping("/messages/send")
     public String sendMessage(@RequestParam Long receiverId, @RequestParam Long productId, @RequestParam String content, Principal principal) {
@@ -47,12 +48,6 @@ public class InteractionController {
         return "redirect:/messages/chat?with=" + receiverId + "&productId=" + productId;
     }
 
-    // Fallback for cached pages using the old URL
-    @PostMapping("/products/{id}/message")
-    public String sendMessageFallback(@PathVariable Long id, @RequestParam String content, Principal principal) {
-        Product product = productService.getProductById(id);
-        return sendMessage(product.getSeller().getId(), id, content, principal);
-    }
     @GetMapping("/messages/chat")
     public String chat(@RequestParam Long with, @RequestParam Long productId, Model model, Principal principal) {
         if (principal == null) return "redirect:/login";
@@ -75,7 +70,7 @@ public class InteractionController {
         Product product = productService.getProductById(id);
         
         user.getSavedProducts().add(product);
-        userService.saveUser(user); // Need to add saveUser to UserService
+        userService.saveUser(user);
         
         return "redirect:/profile?saved=true";
     }

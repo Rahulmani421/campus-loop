@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.Set;
+import java.util.HashSet;
 
 @Entity
 @Table(name = "users")
@@ -47,12 +49,5 @@ public class User {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "product_id")
     )
-    private java.util.Set<Product> savedProducts = new java.util.HashSet<>();
-
-    @PrePersist
-    public void validateEmail() {
-        if (email != null && !email.contains(".edu") && !email.contains("institution.in")) {
-            // In a real app, we'd throw an exception here or handle it in the service
-        }
-    }
+    private Set<Product> savedProducts = new HashSet<>();
 }

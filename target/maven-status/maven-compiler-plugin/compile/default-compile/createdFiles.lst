@@ -8,6 +8,7 @@ com\campusloop\model\User.class
 com\campusloop\model\Message.class
 com\campusloop\repository\ProductRepository.class
 com\campusloop\repository\UserRepository.class
+com\campusloop\repository\DemandRepository.class
 com\campusloop\model\User$UserBuilder.class
 com\campusloop\service\UserService.class
 com\campusloop\CampusLoopApplication.class

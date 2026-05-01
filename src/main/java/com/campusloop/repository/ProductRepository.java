@@ -9,13 +9,9 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findBySoldFalseOrderByCreatedAtDesc();
     
-    @Query("SELECT p FROM Product p WHERE p.sold = false AND " +
-           "(LOWER(p.title) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
-           "LOWER(p.description) LIKE LOWER(CONCAT('%', :query, '%'))) AND " +
-           "(:category IS NULL OR p.category = :category)")
+    @Query("SELECT p FROM Product p WHERE (LOWER(p.title) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(p.description) LIKE LOWER(CONCAT('%', :query, '%'))) AND p.category = :category AND p.sold = false")
     List<Product> searchProducts(String query, Category category);
-
-    List<Product> findBySellerId(Long sellerId);
+    
     long countBySoldTrue();
     List<Product> findBySoldTrue();
 }

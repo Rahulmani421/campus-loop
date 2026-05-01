@@ -11,5 +11,4 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
     List<Message> findConversation(User user1, User user2);
     
     List<Message> findByReceiverOrderByTimestampDesc(User receiver);
-    List<Message> findBySenderOrderByTimestampDesc(User sender);
 }

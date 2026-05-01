@@ -32,7 +32,7 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private Condition itemCondition;
 
-    private String location; // Hostel block / Department
+    private String location; 
     private String imageUrl;
 
     @ManyToOne
