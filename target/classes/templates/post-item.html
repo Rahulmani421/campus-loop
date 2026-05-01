@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html th:replace="~{layout :: layout(~{::content})}" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="content">
+    <div class="container" style="max-width: 700px; margin-top: 2rem;">
+        <div class="glass fade-in" style="padding: 2.5rem;">
+            <h2 style="margin-bottom: 2rem;">Post New Item</h2>
+
+            <form th:action="@{/products/post}" th:object="${product}" method="post">
+                <div class="form-group">
+                    <label>What are you selling?</label>
+                    <input type="text" th:field="*{title}" class="form-control" placeholder="e.g. Hero Cycle 2023 Model"
+                        required>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select th:field="*{category}" class="form-control" required>
+                            <option th:each="cat : ${categories}" th:value="${cat}" th:text="${cat}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Condition</label>
+                        <select th:field="*{itemCondition}" class="form-control" required>
+                            <option th:each="cond : ${conditions}" th:value="${cond}" th:text="${cond}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Price (₹)</label>
+                    <input type="number" th:field="*{price}" class="form-control" placeholder="Enter amount" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea th:field="*{description}" class="form-control" rows="4"
+                        placeholder="Tell buyers more about the item..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Micro-Location (Hostel/Dept)</label>
+                    <input type="text" th:field="*{location}" class="form-control"
+                        placeholder="e.g. Library Gate / Hostel B Entrance" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Image URL (Optional)</label>
+                    <input type="url" th:field="*{imageUrl}" class="form-control" placeholder="Paste an image link">
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary" style="flex: 1; padding: 1rem;">List Item</button>
+                    <a th:href="@{/}" class="btn"
+                        style="flex: 1; padding: 1rem; text-align: center; background: #e2e8f0; color: #475569;">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    th:fragment="layout(content)">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusLoop - Campus Marketplace</title>
+    <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="stylesheet" th:href="@{/css/style.css?v=1.2}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        <a th:href="@{/}" class="logo">CampusLoop</a>
+        <div class="nav-links">
+            <a th:href="@{/}">Browse</a>
+            <a th:href="@{/products/post}">Post Item</a>
+            <span sec:authorize="isAuthenticated()">
+                <a th:href="@{/admin/dashboard}" sec:authorize="hasRole('ADMIN')"
+                    style="color: #7c3aed; font-weight: 700;">Admin Panel</a>
+                <a th:href="@{/messages}">Inbox ✉️</a>
+                <a th:href="@{/profile}">My Account</a>
+                <form th:action="@{/logout}" method="post" style="display:inline">
+                    <button type="submit" class="btn btn-primary"
+                        style="background:transparent; color:var(--text-main)">Logout</button>
+                </form>
+            </span>
+            <span sec:authorize="isAnonymous()">
+                <a th:href="@{/login}">Login</a>
+                <a th:href="@{/register}" class="btn btn-primary">Join Now</a>
+            </span>
+        </div>
+    </nav>
+
+    <div th:replace="${content}"></div>
+
+    <footer style="text-align:center; padding: 4rem 1rem; color: var(--text-muted); font-size: 0.9rem;">
+        &copy; 2026 CampusLoop. For verified students only.
+    </footer>
+
+    <!-- AI Chatbot -->
+    <button class="chatbot-toggler">
+        <span>AI</span>
+    </button>
+    <div class="chatbot">
+        <header>
+            <h2>LoopBot Assistant</h2>
+        </header>
+        <ul class="chatbox">
+            <li class="chat incoming">
+                <p>Hi! I'm LoopBot. How can I help you today? 👋</p>
+            </li>
+        </ul>
+        <div class="chat-input">
+            <textarea placeholder="Ask me anything..." required></textarea>
+            <button id="send-btn">Send</button>
+        </div>
+    </div>
+
+    <script th:src="@{/js/chatbot.js}"></script>
+</body>
+
+</html>

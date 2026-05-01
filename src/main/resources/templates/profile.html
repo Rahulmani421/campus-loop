@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html th:replace="~{layout :: layout(~{::content})}" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="content">
+    <div class="container" style="max-width: 800px; margin-top: 3rem;">
+        <div class="glass fade-in" style="padding: 3rem;">
+            <div style="display: flex; align-items: center; gap: 2rem; margin-bottom: 3rem;">
+                <div style="width: 100px; height: 100px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; font-weight: 800;"
+                    th:text="${#strings.substring(user.fullName,0,1)}">R</div>
+                <div>
+                    <h1 th:text="${user.fullName}" style="font-size: 2.5rem; margin-bottom: 0.5rem;">User Name</h1>
+                    <p style="color: var(--text-muted); font-size: 1.1rem;">
+                        <span th:text="${user.department}">Department</span> •
+                        <span th:text="${user.hostelBlock}">Hostel Block</span>
+                    </p>
+                </div>
+                <div style="margin-left: auto; text-align: center;" class="glass" p-3>
+                    <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary);"
+                        th:text="${user.reputationScore}">5.0</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Reputation
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem;">
+                <div class="glass" style="padding: 1.5rem;">
+                    <h4 style="color: var(--text-muted); margin-bottom: 0.5rem;">Email Address</h4>
+                    <p th:text="${user.email}" style="font-weight: 600;">email@college.edu</p>
+                </div>
+                <div class="glass" style="padding: 1.5rem;">
+                    <h4 style="color: var(--text-muted); margin-bottom: 0.5rem;">Account Status</h4>
+                    <p style="font-weight: 600;">
+                        <span th:if="${user.verified}" style="color: #059669;">Verified Student</span>
+                        <span th:unless="${user.verified}" style="color: #d97706;">Pending Verification</span>
+                    </p>
+                </div>
+            </div>
+
+            <div style="margin-top: 3rem;">
+                <h3 style="margin-bottom: 1.5rem;">♥ Saved Items</h3>
+                <div th:if="${#sets.isEmpty(user.savedProducts)}"
+                    style="text-align: center; color: var(--text-muted); padding: 2rem;">
+                    No items saved yet.
+                </div>
+                <div style="display: grid; gap: 1rem;">
+                    <div th:each="product : ${user.savedProducts}" class="glass"
+                        style="padding: 1rem; display: flex; align-items: center; gap: 1rem;">
+                        <img th:src="${product.imageUrl}"
+                            style="width: 60px; height: 60px; border-radius: 8px; object-fit: cover;">
+                        <div style="flex: 1;">
+                            <div th:text="${product.title}" style="font-weight: 600;">Item Title</div>
+                            <div th:text="'₹' + ${product.price}" style="color: var(--primary); font-size: 0.9rem;">₹0
+                            </div>
+                        </div>
+                        <a th:href="@{/products/{id}(id=${product.id})}" class="btn"
+                            style="padding: 0.5rem 1rem; border: 1px solid var(--primary); color: var(--primary); font-size: 0.8rem;">View</a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-top: 3rem;">
+                <a th:href="@{/products/post}" class="btn btn-primary"
+                    style="flex: 1; text-align: center; padding: 1rem;">List New Item</a>
+                <form th:action="@{/logout}" method="post" style="flex: 1;">
+                    <button type="submit" class="btn"
+                        style="width: 100%; padding: 1rem; background: #fee2e2; color: #b91c1c; font-weight: 600; border: none;">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html th:replace="~{layout :: layout(~{::content})}" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="content">
+    <main class="container" style="margin-top: 2rem;">
+        <div class="glass fade-in"
+            style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; padding: 2.5rem; align-items: start;">
+            <div>
+                <img th:src="${product.imageUrl != null} ? ${product.imageUrl} : 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=600&auto=format&fit=crop'"
+                    style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);"
+                    alt="Product Detail">
+            </div>
+
+            <div class="product-info-full">
+                <span th:text="${product.category}" class="product-category" style="font-size: 1rem;">CATEGORY</span>
+                <h1 th:text="${product.title}"
+                    style="font-size: 2.5rem; margin: 0.5rem 0 1rem; color: var(--text-main);">Product Title</h1>
+                <div th:text="'₹' + ${product.price}" class="product-price"
+                    style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1.5rem;">₹25,000</div>
+
+                <div style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: 12px;">
+                    <h4 style="margin-bottom: 0.5rem; color: var(--text-muted);">Description</h4>
+                    <p th:text="${product.description}">Detailed item description goes here...</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                    <div>
+                        <h4 style="color: var(--text-muted);">Condition</h4>
+                        <p th:text="${product.itemCondition}" style="font-weight: 600;">Good</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--text-muted);">Pickup Location</h4>
+                        <p th:text="${product.location}" style="font-weight: 600;">Hostel Block A</p>
+                    </div>
+                </div>
+
+                <div class="seller-card glass"
+                    style="padding: 1.5rem; display: flex; align-items: center; gap: 1.2rem; margin-bottom: 2.5rem;">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.2rem;"
+                        th:text="${product.seller != null ? #strings.substring(product.seller.fullName,0,1) : 'S'}">S
+                    </div>
+                    <div>
+                        <h4 th:text="${product.seller != null ? product.seller.fullName : 'Verified Seller'}">Seller
+                            Name</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Verified Student • ★ 4.9</p>
+                    </div>
+                </div>
+
+                <div
+                    style="background: white; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border: 1px solid rgba(0,0,0,0.05);">
+                    <form th:action="@{/messages/send}" method="post">
+                        <input type="hidden" name="receiverId" th:value="${product.seller.id}">
+                        <input type="hidden" name="productId" th:value="${product.id}">
+                        <textarea name="content" placeholder="Hi! Is this still available? I'm interested..."
+                            style="width: 100%; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; min-height: 100px; resize: none;"
+                            required></textarea>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem;">Message
+                            Seller</button>
+                    </form>
+                </div>
+
+                <form th:action="@{/products/{id}/save(id=${product.id})}" method="post">
+                    <button type="submit" class="btn"
+                        style="width: 100%; padding: 1rem; background: #f8fafc; border: 1px solid #e2e8f0; color: var(--text-main); font-weight: 600;">
+                        ♥ Save to Wishlist
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+
+</html>

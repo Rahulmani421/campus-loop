@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html th:replace="~{layout :: layout(~{::content})}" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="content">
+    <section class="hero fade-in">
+        <h1>Your Campus Marketplace</h1>
+        <p style="color: var(--text-muted); font-size: 1.2rem; max-width: 600px; margin: 0 auto 2rem;">
+            Buy and sell items within your college community. Trusted, local, and hassle-free.
+        </p>
+
+        <form th:action="@{/}" method="get" style="max-width: 800px; margin: 0 auto;" class="glass" p-4>
+            <div style="display: flex; gap: 1rem; padding: 1rem;">
+                <input type="text" name="query" placeholder="Search for cycles, books..." class="form-control"
+                    style="flex: 2;">
+                <select name="category" class="form-control" style="flex: 1;">
+                    <option value="">All Categories</option>
+                    <option th:each="cat : ${categories}" th:value="${cat}"
+                        th:text="${#strings.capitalize(cat.name().toLowerCase())}"></option>
+                </select>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
+    </section>
+
+    <main class="container">
+        <h2 style="margin-bottom: 1.5rem;">Recent Listings</h2>
+        <div class="product-grid">
+            <div th:each="product : ${products}" class="product-card glass fade-in">
+                <img th:src="${product.imageUrl != null} ? ${product.imageUrl} : 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=400&auto=format&fit=crop'"
+                    class="product-image" alt="Product Image">
+                <div class="product-info">
+                    <div class="product-category" th:text="${product.category}">ELECTRONICS</div>
+                    <a th:href="@{/products/{id}(id=${product.id})}" style="text-decoration:none; color:inherit;">
+                        <h3 class="product-title" th:text="${product.title}">Used Laptop</h3>
+                    </a>
+                    <div class="product-price" th:text="'₹' + ${product.price}">₹25,000</div>
+                    <div class="product-meta">
+                        <span th:text="${product.location}">Hostel Block A</span>
+                        <span th:text="${product.itemCondition}">Good</span>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${#lists.isEmpty(products)}"
+                style="grid-column: 1/-1; text-align: center; padding: 4rem; color: var(--text-muted);">
+                <p>No items found matching your criteria.</p>
+            </div>
+        </div>
+    </main>
+</div>
+
+</html>
