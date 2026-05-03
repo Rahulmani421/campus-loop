@@ -1,8 +1,11 @@
 com\campusloop\model\Condition.class
 com\campusloop\controller\InteractionController.class
 com\campusloop\service\ProductService.class
+com\campusloop\controller\NotificationControllerAdvice.class
 com\campusloop\controller\AuthController.class
 com\campusloop\model\Demand.class
+com\campusloop\model\Notification.class
+com\campusloop\model\Notification$NotificationBuilder.class
 com\campusloop\model\Demand$DemandBuilder.class
 com\campusloop\model\User.class
 com\campusloop\model\Message.class
@@ -16,6 +19,7 @@ com\campusloop\config\SecurityConfig.class
 com\campusloop\controller\ProductController.class
 com\campusloop\model\Category.class
 com\campusloop\repository\MessageRepository.class
+com\campusloop\repository\NotificationRepository.class
 com\campusloop\model\Product.class
 com\campusloop\model\Message$MessageBuilder.class
 com\campusloop\service\MessageService.class

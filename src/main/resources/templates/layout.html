@@ -20,6 +20,10 @@
             <span sec:authorize="isAuthenticated()">
                 <a th:href="@{/admin/dashboard}" sec:authorize="hasRole('ADMIN')"
                     style="color: #7c3aed; font-weight: 700;">Admin Panel</a>
+                <a th:href="@{/notifications}" style="position:relative">
+                    🔔 <span th:if="${unreadNotifications > 0}" th:text="${unreadNotifications}"
+                        style="position:absolute; top:-5px; right:-5px; background:red; color:white; border-radius:50%; padding:2px 5px; font-size:10px;">0</span>
+                </a>
                 <a th:href="@{/messages}">Inbox ✉️</a>
                 <a th:href="@{/profile}">My Account</a>
                 <form th:action="@{/logout}" method="post" style="display:inline">

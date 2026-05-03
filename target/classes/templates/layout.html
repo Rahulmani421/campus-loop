@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CampusLoop - Campus Marketplace</title>
+    <title>CampusLoop - THE PERMANENT MARKETPLACE</title>
     <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
     <link rel="stylesheet" th:href="@{/css/style.css?v=1.2}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -20,6 +20,10 @@
             <span sec:authorize="isAuthenticated()">
                 <a th:href="@{/admin/dashboard}" sec:authorize="hasRole('ADMIN')"
                     style="color: #7c3aed; font-weight: 700;">Admin Panel</a>
+                <a th:href="@{/notifications}" style="position:relative">
+                    🔔 <span th:if="${unreadNotifications > 0}" th:text="${unreadNotifications}"
+                        style="position:absolute; top:-5px; right:-5px; background:red; color:white; border-radius:50%; padding:2px 5px; font-size:10px;">0</span>
+                </a>
                 <a th:href="@{/messages}">Inbox ✉️</a>
                 <a th:href="@{/profile}">My Account</a>
                 <form th:action="@{/logout}" method="post" style="display:inline">

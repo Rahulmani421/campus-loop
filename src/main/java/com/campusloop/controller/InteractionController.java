@@ -6,6 +6,8 @@ import com.campusloop.model.User;
 import com.campusloop.service.MessageService;
 import com.campusloop.service.ProductService;
 import com.campusloop.service.UserService;
+import com.campusloop.model.Notification;
+import com.campusloop.repository.NotificationRepository;
 import com.campusloop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,9 @@ public class InteractionController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private NotificationRepository notificationRepository;
 
     @PostMapping("/messages/send")
     public String sendMessage(@RequestParam Long receiverId, @RequestParam Long productId, @RequestParam String content, Principal principal) {
@@ -81,5 +86,22 @@ public class InteractionController {
         User user = userService.findByUsername(principal.getName()).get();
         model.addAttribute("messages", messageService.getInbox(user));
         return "inbox";
+    }
+
+    @GetMapping("/notifications")
+    public String notifications(Model model, Principal principal) {
+        if (principal == null) return "redirect:/login";
+        User user = userService.findByUsername(principal.getName()).get();
+        model.addAttribute("allNotifications", notificationRepository.findByUserOrderByCreatedAtDesc(user));
+        
+        // Mark all as read when viewed
+        notificationRepository.findByUserOrderByCreatedAtDesc(user).forEach(n -> {
+            if (!n.isRead()) {
+                n.setRead(true);
+                notificationRepository.save(n);
+            }
+        });
+        
+        return "notifications";
     }
 }

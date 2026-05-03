@@ -1,0 +1,2 @@
+authenticated as anonymous user
+SSH key is required for custom domains but no SSH key was sent, add your key to [https://admin.localhost.run/] and reconnect as plan@localhost.run

@@ -6,9 +6,14 @@
             <h1>Admin Insights Hub</h1>
             <p style="color: var(--text-muted); margin: 0;">Welcome back! Here is the latest campus marketplace
                 activity.</p>
-            <div
-                style="font-size: 0.9rem; background: var(--primary); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600;">
-                System Online</div>
+            <div style="display: flex; gap: 1rem;">
+                <a th:href="@{/admin/products}" class="btn"
+                    style="background: white; border: 1px solid var(--primary); color: var(--primary); padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600; text-decoration: none;">Manage
+                    Inventory</a>
+                <div
+                    style="font-size: 0.9rem; background: var(--primary); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600;">
+                    System Online</div>
+            </div>
         </div>
 
         <!-- KPI Grid -->

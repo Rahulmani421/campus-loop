@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html th:replace="~{layout :: layout(~{::content})}" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="content">
+    <div class="container" style="margin-top: 2rem; max-width: 600px;">
+        <div class="glass" style="padding: 2.5rem;">
+            <h2 style="margin-bottom: 2rem;">Add Product (Admin)</h2>
+            <form th:action="@{/admin/products/add}" method="post" th:object="${product}">
+                <div class="form-group" style="margin-bottom: 1.2rem;">
+                    <label>Assigned Seller</label>
+                    <select name="sellerId" class="form-control" required
+                        style="width: 100%; padding: 0.8rem; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.8);">
+                        <option value="">Select User</option>
+                        <option th:each="user : ${users}" th:value="${user.id}"
+                            th:text="${user.fullName + ' (' + user.username + ')'}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.2rem;">
+                    <label>Item Name</label>
+                    <input type="text" th:field="*{title}" class="form-control" placeholder="What are you listing?"
+                        required
+                        style="width: 100%; padding: 0.8rem; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.8);">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.2rem;">
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select th:field="*{category}" class="form-control"
+                            style="width: 100%; padding: 0.8rem; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.8);">
+                            <option th:each="cat : ${categories}" th:value="${cat}" th:text="${cat}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Price (₹)</label>
+                        <input type="number" th:field="*{price}" class="form-control" placeholder="0.00" required
+                            style="width: 100%; padding: 0.8rem; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.8);">
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.2rem;">
+                    <label>Condition</label>
+                    <select name="itemCondition" class="form-control"
+                        style="width: 100%; padding: 0.8rem; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.8);">
+                        <option value="NEW">New</option>
+                        <option value="LIKE_NEW">Like New</option>
+                        <option value="GOOD">Good</option>
+                        <option value="FAIR">Fair</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.2rem;">
+                    <label>Description</label>
+                    <textarea th:field="*{description}" class="form-control" rows="4"
+                        placeholder="Tell us more about the item..."
+                        style="width: 100%; padding: 0.8rem; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.8);"></textarea>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.2rem;">
+                    <label>Location (Hostel/Block)</label>
+                    <input type="text" th:field="*{location}" class="form-control" placeholder="e.g. Block A, Room 101"
+                        style="width: 100%; padding: 0.8rem; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.8);">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 2rem;">
+                    <label>Image URL</label>
+                    <input type="text" th:field="*{imageUrl}" class="form-control"
+                        placeholder="https://example.com/image.jpg"
+                        style="width: 100%; padding: 0.8rem; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.8);">
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width:100%; padding: 1rem; font-weight: 700;">Post
+                    Product</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</html>
